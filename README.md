@@ -2,7 +2,7 @@
 
 This repository is supposed to be a base template for a openshift's cartridge to run a crossbar instance.
 
-    $ rhc app create --from-code https://
+    $ rhc app create --from-code https://github.com/jvdm/openshift-crossbar.git <your-app-name> diy-0.1
 
 ## What it does ##
 
