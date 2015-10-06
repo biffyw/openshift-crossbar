@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+# The logic to stop your application should be put in this script.
+
+$OPENSHIFT_DATA_DIR/usr/bin/crossbar stop --cbdir $OPENSHIFT_REPO_DIR/.crossbar
+if ! kill $(cat $OPENSHIFT_REPO_DIR/pid || echo 'invalid_pid') 2>/dev/null; then
+    echo 'already stopped'
+    rm -f $OPENSHIFT_REPO_DIR/pid
+fi

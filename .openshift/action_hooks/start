@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# The logic to start up your application should be put in this
+# script. The application will work only if it binds to
+# $OPENSHIFT_DIY_IP:8080
+
+set -e
+
+config=$(echo $OPENSHIFT_REPO_DIR/config.*)
+IFS=
+while read line
+do
+    eval IFS= echo "\"$line\""
+done <${config} >$OPENSHIFT_REPO_DIR/.crossbar/$(basename ${config})
+
+nohup $OPENSHIFT_DATA_DIR/usr/bin/crossbar \
+      start --cbdir $OPENSHIFT_REPO_DIR/.crossbar \
+            --logdir $OPENSHIFT_LOG_DIR \
+            --logtofile \
+      &
+
+echo $! > $OPENSHIFT_REPO_DIR/pid

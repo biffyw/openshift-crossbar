@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+
+
+.PHONY: pip all
+
+all: pip
+
+#
+# Environment
+#
+
+prefix := $(OPENSHIFT_DATA_DIR)/usr
+export PATH := $(prefix)/bin:$(PATH)
+
+#
+# Python
+#
+
+python-version := 3.5.0
+python-dir := Python-$(python-version)
+python-url := https://www.python.org/ftp/python/$(python-version)/Python-$(python-version).tar.xz
+
+python-tarball := $(OPENSHIFT_TMP_DIR)/Python-$(python-version).tar.xz
+python := $(OPENSHIFT_DATA_DIR)/.python_build
+
+$(python-tarball):
+	wget $(python-url) -O $@
+
+$(python): $(python-tarball)
+	mkdir -p $(prefix)
+	tar -C $(OPENSHIFT_TMP_DIR) -xJf $<
+	cd $(OPENSHIFT_TMP_DIR)/$(python-dir) && ./configure --prefix=$(prefix) && make install
+	touch $@
+
+#
+# Pip
+#
+
+pip-cmd := pip3
+pip-cachedir := $(OPENSHIFT_TMP_DIR)/.pip
+pip-requirements := $(OPENSHIFT_REPO_DIR)/requirements.txt
+
+
+pip: $(pip-requirements) $(python)
+	$(pip-cmd) install --no-cache-dir -r $<
