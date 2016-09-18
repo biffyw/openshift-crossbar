@@ -16,7 +16,7 @@ export PATH := $(prefix)/bin:$(PATH)
 # Python
 #
 
-python-version := 2.7.12
+python-version := 3.5.2
 python-dir := Python-$(python-version)
 python-url := https://www.python.org/ftp/python/$(python-version)/Python-$(python-version).tar.xz
 
@@ -36,7 +36,7 @@ $(python): $(python-tarball)
 # Pip
 #
 
-pip-cmd := pip
+pip-cmd := pip3
 pip-cachedir := $(OPENSHIFT_TMP_DIR)/.pip
 pip-requirements := $(OPENSHIFT_REPO_DIR)/requirements.txt
 
