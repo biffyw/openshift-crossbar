@@ -16,7 +16,7 @@ export PATH := $(prefix)/bin:$(PATH)
 # Python
 #
 
-python-version := 2.7.0
+python-version := 2.7.12
 python-dir := Python-$(python-version)
 python-url := https://www.python.org/ftp/python/$(python-version)/Python-$(python-version).tar.xz
 
